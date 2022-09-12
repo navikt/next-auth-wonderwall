@@ -1,0 +1,33 @@
+import { createRemoteJWKSet, jwtVerify } from 'jose';
+
+import { verifyAndGetAzureConfig } from './config';
+import { getIssuer } from './issuer';
+
+const azureConfig = verifyAndGetAzureConfig();
+
+let _remoteJWKSet: ReturnType<typeof createRemoteJWKSet>;
+async function jwkSet(): Promise<ReturnType<typeof createRemoteJWKSet>> {
+    if (typeof _remoteJWKSet === 'undefined') {
+        const iss = await getIssuer();
+        _remoteJWKSet = createRemoteJWKSet(new URL(<string>iss.metadata.jwks_uri));
+    }
+
+    return _remoteJWKSet;
+}
+
+export async function validateAzureToken(bearerToken: string): Promise<ValidationResult> {
+    const token = bearerToken.replace('Bearer ', '');
+    const verified = await jwtVerify(token, await jwkSet(), {
+        issuer: (await getIssuer()).metadata.issuer,
+    });
+
+    if (verified.payload.exp && verified.payload.exp * 1000 <= Date.now()) {
+        return { error: 'token is expired' };
+    }
+
+    if (verified.payload.aud !== azureConfig.clientId) {
+        return { error: 'client_id does not match app client_id' };
+    }
+
+    return 'ok';
+}
