@@ -1,11 +1,12 @@
 import { GrantBody } from 'openid-client';
 
 import { getTokenInCache, setTokenInCache } from '../cache';
-import { RPError, OPError } from '../shared/oidcUtils';
+import { RPError, OPError, createOidcUnknownError } from '../shared/oidcUtils';
+import { GrantResult } from '../shared/types';
 
 import getAzureAuthClient from './client';
 
-export async function grantAzureOboToken(userToken: string, scope: string): Promise<string | undefined> {
+export async function grantAzureOboToken(userToken: string, scope: string): Promise<GrantResult> {
     const cacheKey = `azure-${userToken}-${scope}`;
     const [cacheHit, tokenInCache] = getTokenInCache(cacheKey);
     if (cacheHit) return tokenInCache;
@@ -25,17 +26,25 @@ export async function grantAzureOboToken(userToken: string, scope: string): Prom
         return tokenSet.access_token;
     } catch (err) {
         if (err instanceof OPError || err instanceof RPError) {
-            // logger.error(createOidcUnknownError(err));
-            throw err;
+            return {
+                errorType: 'OIDC_OP_RP_ERROR',
+                message: createOidcUnknownError(err),
+                error: err,
+            };
         }
 
-        if (!(err instanceof Error)) {
-            // logger.error('Unknown error from openid-client');
-            // logger.error(err);
-            throw err;
+        if (err instanceof Error) {
+            return {
+                errorType: 'OIDC_UNKNOWN_ERROR',
+                message: 'Unknown error from openid-client',
+                error: err,
+            };
         }
 
-        // logger.error('Unknown error from openid-client');
-        throw err;
+        return {
+            errorType: 'UNKNOWN_ERROR',
+            message: 'Unknown error',
+            error: err,
+        };
     }
 }
