@@ -1,5 +1,7 @@
 import { createRemoteJWKSet, jwtVerify } from 'jose';
 
+import { ValidationResult } from '../shared/validation';
+
 import { verifyAndGetTokenXConfig } from './config';
 import { getIssuer } from './issuer';
 
@@ -15,23 +17,25 @@ async function jwkSet(): Promise<ReturnType<typeof createRemoteJWKSet>> {
     return _remoteJWKSet;
 }
 
-export async function validateTokenXToken(bearerToken: string): Promise<ValidationResult> {
+export async function validateTokenXToken(
+    bearerToken: string,
+): Promise<ValidationResult<'EXPIRED' | 'CLIENT_ID_MISMATCH' | 'NOT_ACR_LEVEL4'>> {
     const token = bearerToken.replace('Bearer ', '');
     const verified = await jwtVerify(token, await jwkSet(), {
         issuer: (await getIssuer()).metadata.issuer,
     });
 
     if (verified.payload.exp && verified.payload.exp * 1000 <= Date.now()) {
-        return { error: 'token is expired' };
+        return { errorType: 'EXPIRED', message: 'token is expired' };
     }
 
     if (verified.payload.client_id !== tokenXConfig.clientId) {
-        return { error: 'client_id does not match app client_id' };
+        return { errorType: 'CLIENT_ID_MISMATCH', message: 'client_id does not match app client_id' };
     }
 
     if (verified.payload.acr !== 'Level4') {
-        return { error: 'token does not have acr Level4' };
+        return { errorType: 'NOT_ACR_LEVEL4', message: 'token does not have acr Level4' };
     }
 
-    return 'ok';
+    return 'valid';
 }

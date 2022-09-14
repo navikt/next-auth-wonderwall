@@ -1,5 +1,7 @@
 import { createRemoteJWKSet, jwtVerify } from 'jose';
 
+import { ValidationResult } from '../shared/validation';
+
 import { verifyAndGetAzureConfig } from './config';
 import { getIssuer } from './issuer';
 
@@ -15,19 +17,21 @@ async function jwkSet(): Promise<ReturnType<typeof createRemoteJWKSet>> {
     return _remoteJWKSet;
 }
 
-export async function validateAzureToken(bearerToken: string): Promise<ValidationResult> {
+export async function validateAzureToken(
+    bearerToken: string,
+): Promise<ValidationResult<'EXPIRED' | 'CLIENT_ID_MISMATCH'>> {
     const token = bearerToken.replace('Bearer ', '');
     const verified = await jwtVerify(token, await jwkSet(), {
         issuer: (await getIssuer()).metadata.issuer,
     });
 
     if (verified.payload.exp && verified.payload.exp * 1000 <= Date.now()) {
-        return { error: 'token is expired' };
+        return { errorType: 'EXPIRED', message: 'token is expired' };
     }
 
     if (verified.payload.aud !== azureConfig.clientId) {
-        return { error: 'client_id does not match app client_id' };
+        return { errorType: 'CLIENT_ID_MISMATCH', message: 'client_id does not match app client_id' };
     }
 
-    return 'ok';
+    return 'valid';
 }
