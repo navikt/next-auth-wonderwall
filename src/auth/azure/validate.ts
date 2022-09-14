@@ -5,8 +5,6 @@ import { ValidationResult } from '../shared/validation';
 import { verifyAndGetAzureConfig } from './config';
 import { getIssuer } from './issuer';
 
-const azureConfig = verifyAndGetAzureConfig();
-
 let _remoteJWKSet: ReturnType<typeof createRemoteJWKSet>;
 async function jwkSet(): Promise<ReturnType<typeof createRemoteJWKSet>> {
     if (typeof _remoteJWKSet === 'undefined') {
@@ -29,6 +27,7 @@ export async function validateAzureToken(
         return { errorType: 'EXPIRED', message: 'token is expired' };
     }
 
+    const azureConfig = verifyAndGetAzureConfig();
     if (verified.payload.aud !== azureConfig.clientId) {
         return { errorType: 'CLIENT_ID_MISMATCH', message: 'client_id does not match app client_id' };
     }

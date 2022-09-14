@@ -5,8 +5,6 @@ import { ValidationResult } from '../shared/validation';
 import { verifyAndGetTokenXConfig } from './config';
 import { getIssuer } from './issuer';
 
-const tokenXConfig = verifyAndGetTokenXConfig();
-
 let _remoteJWKSet: ReturnType<typeof createRemoteJWKSet>;
 async function jwkSet(): Promise<ReturnType<typeof createRemoteJWKSet>> {
     if (typeof _remoteJWKSet === 'undefined') {
@@ -29,6 +27,7 @@ export async function validateTokenXToken(
         return { errorType: 'EXPIRED', message: 'token is expired' };
     }
 
+    const tokenXConfig = verifyAndGetTokenXConfig();
     if (verified.payload.client_id !== tokenXConfig.clientId) {
         return { errorType: 'CLIENT_ID_MISMATCH', message: 'client_id does not match app client_id' };
     }
