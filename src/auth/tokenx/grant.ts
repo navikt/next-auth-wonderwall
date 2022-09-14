@@ -2,7 +2,7 @@ import { GrantBody } from 'openid-client';
 
 import { createOidcUnknownError, OPError, RPError } from '../shared/oidcUtils';
 import { getTokenInCache, setTokenInCache } from '../cache';
-import { GrantResult } from '../shared/types';
+import { GrantResult } from '../shared/utils';
 
 import getTokenXAuthClient from './client';
 
@@ -31,6 +31,12 @@ export async function grantTokenXOboToken(subjectToken: string, audience: string
     try {
         const tokenSet = await client.grant(grantBody, additionalClaims);
         setTokenInCache(cacheKey, tokenSet);
+        if (!tokenSet.access_token) {
+            return {
+                errorType: 'NO_TOKEN',
+                message: 'TokenSet does not contain an access_token',
+            };
+        }
         return tokenSet.access_token;
     } catch (err: unknown) {
         if (err instanceof OPError || err instanceof RPError) {

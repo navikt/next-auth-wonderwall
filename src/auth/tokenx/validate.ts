@@ -1,6 +1,6 @@
 import { createRemoteJWKSet, jwtVerify } from 'jose';
 
-import { ValidationResult } from '../shared/types';
+import { ValidationResult } from '../shared/utils';
 
 import { verifyAndGetTokenXConfig } from './config';
 import { getIssuer } from './issuer';

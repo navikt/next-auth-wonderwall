@@ -1,6 +1,6 @@
 import { createRemoteJWKSet, jwtVerify } from 'jose';
 
-import { ValidationResult } from '../shared/types';
+import { ValidationResult } from '../shared/utils';
 
 import { verifyAndGetAzureConfig } from './config';
 import { getIssuer } from './issuer';
