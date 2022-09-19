@@ -9,5 +9,6 @@
         "strictNullChecks": true,
         "skipLibCheck": true,
         "outDir": "dist"
-    }
+    },
+    "exclude": ["src/__tests__/**", "src/testUtils/**", "jest.setup.ts"]
 }
