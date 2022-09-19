@@ -8,8 +8,8 @@ import { getIssuer } from './issuer';
 let _remoteJWKSet: ReturnType<typeof createRemoteJWKSet>;
 async function jwkSet(): Promise<ReturnType<typeof createRemoteJWKSet>> {
     if (typeof _remoteJWKSet === 'undefined') {
-        const iss = await getIssuer();
-        _remoteJWKSet = createRemoteJWKSet(new URL(<string>iss.metadata.jwks_uri));
+        const issuer = await getIssuer();
+        _remoteJWKSet = createRemoteJWKSet(new URL(<string>issuer.metadata.jwks_uri));
     }
 
     return _remoteJWKSet;

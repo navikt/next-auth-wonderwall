@@ -1,2 +1,2 @@
 export * from './azure';
-export * from './tokenx';
+export * from './idporten';

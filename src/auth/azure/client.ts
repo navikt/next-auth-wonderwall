@@ -1,6 +1,7 @@
-import { Client, ClientMetadata, Issuer } from 'openid-client';
+import { Client, ClientMetadata } from 'openid-client';
 
 import { verifyAndGetAzureConfig } from './config';
+import { getIssuer } from './issuer';
 
 let client: Client | null = null;
 async function getAuthClient(): Promise<Client> {
@@ -15,7 +16,7 @@ async function getAuthClient(): Promise<Client> {
         response_mode: 'query',
     };
 
-    const issuer = await Issuer.discover(azureConfig.discoveryUrl);
+    const issuer = await getIssuer();
     client = new issuer.Client(metadata);
 
     return client;
