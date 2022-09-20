@@ -1,34 +1,22 @@
-import { createRemoteJWKSet, jwtVerify } from 'jose';
-
 import { ValidationResult } from '../shared/utils';
+import { verifyJwt } from '../shared/verify';
 
 import { verifyAndGetAzureConfig } from './config';
 import { getIssuer } from './issuer';
+import { getJwkSet } from './jwk';
 
-let _remoteJWKSet: ReturnType<typeof createRemoteJWKSet>;
-async function jwkSet(): Promise<ReturnType<typeof createRemoteJWKSet>> {
-    if (typeof _remoteJWKSet === 'undefined') {
-        const issuer = await getIssuer();
-        _remoteJWKSet = createRemoteJWKSet(new URL(<string>issuer.metadata.jwks_uri));
-    }
+export type AzureAdErrorVariants = 'EXPIRED' | 'CLIENT_ID_MISMATCH' | 'UNKNOWN_JOSE_ERROR';
+export type AzureAdValidationResult = ValidationResult<AzureAdErrorVariants>;
 
-    return _remoteJWKSet;
-}
+export async function validateAzureToken(bearerToken: string): Promise<ValidationResult<AzureAdErrorVariants>> {
+    const verificationResult = await verifyJwt(bearerToken, await getJwkSet(), await getIssuer());
 
-export async function validateAzureToken(
-    bearerToken: string,
-): Promise<ValidationResult<'EXPIRED' | 'CLIENT_ID_MISMATCH'>> {
-    const token = bearerToken.replace('Bearer ', '');
-    const verified = await jwtVerify(token, await jwkSet(), {
-        issuer: (await getIssuer()).metadata.issuer,
-    });
-
-    if (verified.payload.exp && verified.payload.exp * 1000 <= Date.now()) {
-        return { errorType: 'EXPIRED', message: 'token is expired' };
+    if ('errorType' in verificationResult) {
+        return verificationResult;
     }
 
     const azureConfig = verifyAndGetAzureConfig();
-    if (verified.payload.aud !== azureConfig.clientId) {
+    if (verificationResult.payload.aud !== azureConfig.clientId) {
         return { errorType: 'CLIENT_ID_MISMATCH', message: 'client_id does not match app client_id' };
     }
 

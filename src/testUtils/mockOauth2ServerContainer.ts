@@ -1,8 +1,23 @@
+import { randomUUID } from 'crypto';
+
 import { GenericContainer, StartedTestContainer, Wait } from 'testcontainers';
 
-const validClaims = {
+const validIdportenClaims = {
     client_id: 'test-client-id',
     acr: 'Level4',
+    client_amr: 'private_key_jwt',
+    sub: randomUUID(),
+    aud: 'notfound',
+    at_hash: randomUUID(),
+    amr: ['BankId'],
+    pid: 'user-pid',
+    locale: 'nb',
+    sid: randomUUID(),
+    auth_time: Date.now(),
+};
+
+const validAzureAdClaims = {
+    aud: 'test-client-id',
 };
 
 const mockOauth2ServerJsonConfig = {
@@ -16,13 +31,13 @@ const mockOauth2ServerJsonConfig = {
                 {
                     requestParam: 'VALID',
                     match: 'true',
-                    claims: validClaims,
+                    claims: validIdportenClaims,
                 },
                 {
                     requestParam: 'WRONG_CLIENT_ID',
                     match: 'true',
                     claims: {
-                        ...validClaims,
+                        ...validIdportenClaims,
                         client_id: 'some-invalid-client-id',
                     },
                 },
@@ -30,22 +45,25 @@ const mockOauth2ServerJsonConfig = {
                     requestParam: 'WRONG_ACR',
                     match: 'true',
                     claims: {
-                        ...validClaims,
+                        ...validIdportenClaims,
                         acr: 'Level3',
                     },
                 },
             ],
         },
         {
-            issuerId: 'azuread',
+            issuerId: 'azure',
+            tokenExpiry: 3,
             requestMappings: [
                 {
-                    requestParam: 'someparam',
-                    match: 'somevalue',
-                    claims: {
-                        sub: 'subBySomeParam',
-                        aud: ['audBySomeParam'],
-                    },
+                    requestParam: 'VALID',
+                    match: 'true',
+                    claims: validAzureAdClaims,
+                },
+                {
+                    requestParam: 'WRONG_CLIENT_ID',
+                    match: 'true',
+                    claims: { ...validAzureAdClaims, aud: 'some-invalid-client-id' },
                 },
             ],
         },
@@ -71,4 +89,12 @@ export async function startMockOauth2ServerContainer(): Promise<StartedTestConta
 
 export function getPort(container: StartedTestContainer): number {
     return container.getMappedPort(MOCK_OAUTH_SERVER_PORT);
+}
+
+export function getWellKnownUrl(container: StartedTestContainer, issuer: 'idporten' | 'azure'): string {
+    return `http://localhost:${getPort(container)}/${issuer}/.well-known/openid-configuration`;
+}
+
+export function getMockOauthServerUrl(container: StartedTestContainer): string {
+    return `http://localhost:${getPort(container)}`;
 }
