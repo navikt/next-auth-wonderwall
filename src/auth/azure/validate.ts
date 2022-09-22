@@ -8,7 +8,7 @@ import { getJwkSet } from './jwk';
 export type AzureAdErrorVariants = 'EXPIRED' | 'CLIENT_ID_MISMATCH' | 'UNKNOWN_JOSE_ERROR';
 export type AzureAdValidationResult = ValidationResult<AzureAdErrorVariants>;
 
-export async function validateAzureToken(bearerToken: string): Promise<ValidationResult<AzureAdErrorVariants>> {
+export async function validateAzureToken(bearerToken: string): Promise<AzureAdValidationResult> {
     const verificationResult = await verifyJwt(bearerToken, await getJwkSet(), await getIssuer());
 
     if ('errorType' in verificationResult) {

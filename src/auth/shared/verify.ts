@@ -11,7 +11,7 @@ export async function verifyJwt(
     const token = bearerToken.replace('Bearer ', '');
 
     try {
-        return await jwtVerify(token, await jwkSet, {
+        return await jwtVerify(token, jwkSet, {
             issuer: issuer.metadata.issuer,
         });
     } catch (err) {
