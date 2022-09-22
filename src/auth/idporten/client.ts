@@ -14,7 +14,7 @@ async function getTokenXAuthClient(): Promise<Client> {
     const issuer = await getTokenXIssuer();
     client = new issuer.Client(
         {
-            client_id: tokenXConfig.clientId,
+            client_id: tokenXConfig.tokenXClientId,
             token_endpoint_auth_method: 'private_key_jwt',
         },
         { keys: [jwk] },

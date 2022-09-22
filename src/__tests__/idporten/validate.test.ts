@@ -16,7 +16,12 @@ describe('idporten token', () => {
 
     beforeAll(async () => {
         container = await startMockOauth2ServerContainer();
-        setTokenXWonderwallEnv('test-client-id', 'unused for validation', getWellKnownUrl(container, 'idporten'));
+        setTokenXWonderwallEnv(
+            'tokenx-test-client-id',
+            'idporten-test-client-id',
+            'unused for validation',
+            getWellKnownUrl(container, 'idporten'),
+        );
         mockOauthServerUrl = getMockOauthServerUrl(container);
     });
 

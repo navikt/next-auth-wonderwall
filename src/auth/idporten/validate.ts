@@ -16,7 +16,7 @@ export async function validateIdportenToken(bearerToken: string): Promise<Idport
     }
 
     const tokenXConfig = verifyAndGetTokenXConfig();
-    if (verificationResult.payload.client_id !== tokenXConfig.clientId) {
+    if (verificationResult.payload.client_id !== tokenXConfig.idportenClientId) {
         return { errorType: 'CLIENT_ID_MISMATCH', message: 'client_id does not match app client_id' };
     }
 

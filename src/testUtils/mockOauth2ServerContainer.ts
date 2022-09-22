@@ -3,7 +3,7 @@ import { randomUUID } from 'crypto';
 import { GenericContainer, StartedTestContainer, Wait } from 'testcontainers';
 
 const validIdportenClaims = {
-    client_id: 'test-client-id',
+    client_id: 'idporten-test-client-id',
     acr: 'Level4',
     client_amr: 'private_key_jwt',
     sub: randomUUID(),

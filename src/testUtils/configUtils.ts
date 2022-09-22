@@ -1,7 +1,13 @@
-export function setTokenXWonderwallEnv(clientId: string, privateJwk: string, wellKnownUrl: string): void {
-    process.env.TOKEN_X_CLIENT_ID = clientId;
+export function setTokenXWonderwallEnv(
+    tokenXClientId: string,
+    idportenClientId: string,
+    privateJwk: string,
+    wellKnownUrl: string,
+): void {
+    process.env.TOKEN_X_CLIENT_ID = tokenXClientId;
     process.env.TOKEN_X_PRIVATE_JWK = privateJwk;
     process.env.TOKEN_X_WELL_KNOWN_URL = wellKnownUrl;
+    process.env.IDPORTEN_CLIENT_ID = idportenClientId;
     process.env.IDPORTEN_WELL_KNOWN_URL = wellKnownUrl;
 }
 
