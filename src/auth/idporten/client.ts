@@ -2,7 +2,7 @@ import { Client } from 'openid-client';
 import { JWK } from 'jose';
 
 import { verifyAndGetTokenXConfig } from './config';
-import { getIssuer } from './issuer';
+import { getTokenXIssuer } from './issuer';
 
 let client: Client | null = null;
 async function getTokenXAuthClient(): Promise<Client> {
@@ -11,7 +11,7 @@ async function getTokenXAuthClient(): Promise<Client> {
     const tokenXConfig = verifyAndGetTokenXConfig();
     const jwk: JWK = JSON.parse(tokenXConfig.privateJwk);
 
-    const issuer = await getIssuer();
+    const issuer = await getTokenXIssuer();
     client = new issuer.Client(
         {
             client_id: tokenXConfig.clientId,
