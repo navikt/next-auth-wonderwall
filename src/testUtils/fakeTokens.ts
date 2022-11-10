@@ -1,9 +1,9 @@
 type FakeIdPortenResult = {
-    access_token: string;
-    token_type: string;
-};
+    access_token: string
+    token_type: string
+}
 
-type FakeIdportenTokenVariant = 'VALID' | 'WRONG_CLIENT_ID' | 'WRONG_ACR';
+type FakeIdportenTokenVariant = 'VALID' | 'WRONG_CLIENT_ID' | 'WRONG_ACR'
 
 export async function getFakeIdportenToken(
     mockOauth2ServerUrl: string,
@@ -21,12 +21,12 @@ export async function getFakeIdportenToken(
             client_id: 'foo',
             client_secret: 'bar',
         }),
-    }).then((it) => it.text());
+    }).then((it) => it.text())
 
-    return JSON.parse(fakeToken);
+    return JSON.parse(fakeToken)
 }
 
-type FakeAzureAdTokenVariant = 'VALID' | 'WRONG_CLIENT_ID';
+type FakeAzureAdTokenVariant = 'VALID' | 'WRONG_CLIENT_ID'
 
 export async function getFakeAzureAdToken(
     mockOauth2ServerUrl: string,
@@ -44,7 +44,7 @@ export async function getFakeAzureAdToken(
             client_id: 'foo',
             client_secret: 'bar',
         }),
-    }).then((it) => it.text());
+    }).then((it) => it.text())
 
-    return JSON.parse(fakeToken);
+    return JSON.parse(fakeToken)
 }

@@ -24,6 +24,7 @@ jobs:
             ${{ runner.os }}-yarn-
       - run: yarn --immutable
       - run: yarn test
+      - run: yarn lint
       - run: yarn build
       - run: npm publish
         if: github.ref == 'refs/heads/main'

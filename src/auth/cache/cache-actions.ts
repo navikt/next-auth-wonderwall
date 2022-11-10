@@ -1,22 +1,22 @@
-import { TokenSet } from 'openid-client';
+import { TokenSet } from 'openid-client'
 
-import tokenCache from './token-cache';
+import tokenCache from './token-cache'
 
 export function flush(): void {
-    tokenCache.flushAll();
+    tokenCache.flushAll()
 }
 
 export function getTokenInCache(cacheKey: string): [cacheHit: true, value: string] | [cacheHit: false] {
-    const tokenInCache: string | undefined = tokenCache.get(cacheKey);
+    const tokenInCache: string | undefined = tokenCache.get(cacheKey)
     if (tokenInCache) {
-        return [true, tokenInCache];
+        return [true, tokenInCache]
     }
 
-    return [false];
+    return [false]
 }
 
 export function setTokenInCache(cacheKey: string, tokenSet: TokenSet): void {
-    if (tokenSet.access_token == null) return;
+    if (tokenSet.access_token == null) return
 
-    tokenCache.set(cacheKey, tokenSet.access_token, (tokenSet.expires_in ?? 65) - 5);
+    tokenCache.set(cacheKey, tokenSet.access_token, (tokenSet.expires_in ?? 65) - 5)
 }
