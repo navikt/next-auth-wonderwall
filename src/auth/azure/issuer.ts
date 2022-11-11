@@ -1,13 +1,13 @@
-import { Client, Issuer } from 'openid-client';
+import { Client, Issuer } from 'openid-client'
 
-import { verifyAndGetAzureConfig } from './config';
+import { verifyAndGetAzureConfig } from './config'
 
-let issuer: Issuer<Client>;
+let issuer: Issuer<Client>
 export async function getIssuer(): Promise<Issuer<Client>> {
     if (issuer == null) {
-        const azureConfig = verifyAndGetAzureConfig();
+        const azureConfig = verifyAndGetAzureConfig()
 
-        issuer = await Issuer.discover(azureConfig.discoveryUrl);
+        issuer = await Issuer.discover(azureConfig.discoveryUrl)
     }
-    return issuer;
+    return issuer
 }

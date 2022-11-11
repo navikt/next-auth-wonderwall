@@ -1,24 +1,24 @@
-import { ValidationResult } from '../shared/utils';
-import { verifyJwt } from '../shared/verify';
+import { ValidationResult } from '../shared/utils'
+import { verifyJwt } from '../shared/verify'
 
-import { verifyAndGetAzureConfig } from './config';
-import { getIssuer } from './issuer';
-import { getJwkSet } from './jwk';
+import { verifyAndGetAzureConfig } from './config'
+import { getIssuer } from './issuer'
+import { getJwkSet } from './jwk'
 
-export type AzureAdErrorVariants = 'EXPIRED' | 'CLIENT_ID_MISMATCH' | 'UNKNOWN_JOSE_ERROR';
-export type AzureAdValidationResult = ValidationResult<AzureAdErrorVariants>;
+export type AzureAdErrorVariants = 'EXPIRED' | 'CLIENT_ID_MISMATCH' | 'UNKNOWN_JOSE_ERROR'
+export type AzureAdValidationResult = ValidationResult<AzureAdErrorVariants>
 
 export async function validateAzureToken(bearerToken: string): Promise<AzureAdValidationResult> {
-    const verificationResult = await verifyJwt(bearerToken, await getJwkSet(), await getIssuer());
+    const verificationResult = await verifyJwt(bearerToken, await getJwkSet(), await getIssuer())
 
     if ('errorType' in verificationResult) {
-        return verificationResult;
+        return verificationResult
     }
 
-    const azureConfig = verifyAndGetAzureConfig();
+    const azureConfig = verifyAndGetAzureConfig()
     if (verificationResult.payload.aud !== azureConfig.clientId) {
-        return { errorType: 'CLIENT_ID_MISMATCH', message: 'client_id does not match app client_id' };
+        return { errorType: 'CLIENT_ID_MISMATCH', message: 'client_id does not match app client_id' }
     }
 
-    return 'valid';
+    return 'valid'
 }

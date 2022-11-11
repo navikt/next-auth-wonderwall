@@ -1,26 +1,26 @@
-import { createRemoteJWKSet, errors, jwtVerify, JWTVerifyResult, ResolvedKey } from 'jose';
-import { Client, Issuer } from 'openid-client';
+import { createRemoteJWKSet, errors, jwtVerify, JWTVerifyResult, ResolvedKey } from 'jose'
+import { Client, Issuer } from 'openid-client'
 
-import { ValidationError } from './utils';
+import { ValidationError } from './utils'
 
 export async function verifyJwt(
     bearerToken: string,
     jwkSet: ReturnType<typeof createRemoteJWKSet>,
     issuer: Issuer<Client>,
 ): Promise<(JWTVerifyResult & ResolvedKey) | ValidationError<'EXPIRED' | 'UNKNOWN_JOSE_ERROR'>> {
-    const token = bearerToken.replace('Bearer ', '');
+    const token = bearerToken.replace('Bearer ', '')
 
     try {
         return await jwtVerify(token, jwkSet, {
             issuer: issuer.metadata.issuer,
-        });
+        })
     } catch (err) {
         if (err instanceof errors.JWTExpired) {
             return {
                 errorType: 'EXPIRED',
                 message: err.message,
                 error: err,
-            };
+            }
         }
 
         if (err instanceof errors.JOSEError) {
@@ -28,9 +28,9 @@ export async function verifyJwt(
                 errorType: 'UNKNOWN_JOSE_ERROR',
                 message: err.message,
                 error: err,
-            };
+            }
         }
 
-        throw err;
+        throw err
     }
 }

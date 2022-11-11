@@ -1,4 +1,4 @@
-import 'next';
+import 'next'
 
 // starting testcontainers can take some time first time pulling the docker image
-jest.setTimeout(65000);
+jest.setTimeout(65000)

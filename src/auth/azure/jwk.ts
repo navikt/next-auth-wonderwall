@@ -1,13 +1,13 @@
-import { createRemoteJWKSet } from 'jose';
+import { createRemoteJWKSet } from 'jose'
 
-import { getIssuer } from './issuer';
+import { getIssuer } from './issuer'
 
-let remoteJWKSet: ReturnType<typeof createRemoteJWKSet>;
+let remoteJWKSet: ReturnType<typeof createRemoteJWKSet>
 export async function getJwkSet(): Promise<ReturnType<typeof createRemoteJWKSet>> {
     if (remoteJWKSet == null) {
-        const issuer = await getIssuer();
-        remoteJWKSet = createRemoteJWKSet(new URL(<string>issuer.metadata.jwks_uri));
+        const issuer = await getIssuer()
+        remoteJWKSet = createRemoteJWKSet(new URL(<string>issuer.metadata.jwks_uri))
     }
 
-    return remoteJWKSet;
+    return remoteJWKSet
 }

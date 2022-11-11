@@ -1,2 +1,2 @@
-export * from './azure';
-export * from './idporten';
+export * from './azure'
+export * from './idporten'
