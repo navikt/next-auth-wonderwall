@@ -32,6 +32,13 @@ describe('idporten token', () => {
         expect(result).toEqual('valid')
     })
 
+    it('should be valid when valid with new ACR claim', async () => {
+        const wonderwallToken = await getFakeIdportenToken(mockOauthServerUrl, 'NEW_ACR')
+        const result = await validateIdportenToken(wonderwallToken.access_token)
+
+        expect(result).toEqual('valid')
+    })
+
     it('should be invalid when token is expired', async () => {
         const wonderwallToken = await getFakeIdportenToken(mockOauthServerUrl, 'VALID')
 

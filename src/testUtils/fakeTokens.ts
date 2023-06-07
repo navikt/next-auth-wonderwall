@@ -3,7 +3,7 @@ type FakeIdPortenResult = {
     token_type: string
 }
 
-type FakeIdportenTokenVariant = 'VALID' | 'WRONG_CLIENT_ID' | 'WRONG_ACR'
+type FakeIdportenTokenVariant = 'VALID' | 'WRONG_CLIENT_ID' | 'WRONG_ACR' | 'NEW_ACR'
 
 export async function getFakeIdportenToken(
     mockOauth2ServerUrl: string,
