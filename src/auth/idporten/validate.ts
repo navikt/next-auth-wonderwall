@@ -20,7 +20,12 @@ export async function validateIdportenToken(bearerToken: string): Promise<Idport
         return { errorType: 'CLIENT_ID_MISMATCH', message: 'client_id does not match app client_id' }
     }
 
-    if (verificationResult.payload.acr !== 'Level4') {
+    if (
+        // Old idporten claim for level 4
+        verificationResult.payload.acr !== 'Level4' &&
+        // new idporten claim for level 4
+        verificationResult.payload.acr !== 'idporten-loa-high'
+    ) {
         return { errorType: 'NOT_ACR_LEVEL4', message: 'token does not have acr Level4' }
     }
 

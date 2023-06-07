@@ -49,6 +49,14 @@ const mockOauth2ServerJsonConfig = {
                         acr: 'Level3',
                     },
                 },
+                {
+                    requestParam: 'NEW_ACR',
+                    match: 'true',
+                    claims: {
+                        ...validIdportenClaims,
+                        acr: 'idporten-loa-high',
+                    },
+                },
             ],
         },
         {
