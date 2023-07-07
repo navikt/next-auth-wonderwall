@@ -1,0 +1,16 @@
+{
+    "name": "@navikt/next-auth-wonderwall",
+    "version": "1.5.0",
+    "scripts": {
+        "build": "tsc --declaration",
+        "test": "jest",
+        "lint": "eslint src"
+    },
+    "dependencies": {
+        "@navikt/node-auth-wonderwall": "workspace:*",
+        "typescript": "^5.1.6"
+    },
+    "peerDependencies": {
+        "next": "12 || 13"
+    }
+}
