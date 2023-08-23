@@ -87,6 +87,7 @@ export async function startMockOauth2ServerContainer(): Promise<StartedTestConta
         .withWaitStrategy(Wait.forLogMessage(/.*started server.*/))
         .start()
         .then((it) => {
+            // eslint-disable-next-line no-console
             console.info(
                 `Started mock-oauth2-server on http://${it.getHost()}:${it.getMappedPort(MOCK_OAUTH_SERVER_PORT)}`,
             )
