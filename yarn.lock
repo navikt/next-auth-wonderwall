@@ -945,7 +945,7 @@ __metadata:
     openid-client: ^5.6.1
     prettier: ^3.0.3
     react: ^18.2.0
-    testcontainers: ^10.2.1
+    testcontainers: ^10.2.2
     ts-jest: ^29.1.1
     typescript: ^5.2.2
     zod: ^3.22.4
@@ -1563,7 +1563,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"archiver@npm:^5.3.1":
+"archiver@npm:^5.3.2":
   version: 5.3.2
   resolution: "archiver@npm:5.3.2"
   dependencies:
@@ -5063,7 +5063,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.6.12":
+"node-fetch@npm:^2.7.0":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
   dependencies:
@@ -5567,7 +5567,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"properties-reader@npm:^2.2.0":
+"properties-reader@npm:^2.3.0":
   version: 2.3.0
   resolution: "properties-reader@npm:2.3.0"
   dependencies:
@@ -6349,25 +6349,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"testcontainers@npm:^10.2.1":
-  version: 10.2.1
-  resolution: "testcontainers@npm:10.2.1"
+"testcontainers@npm:^10.2.2":
+  version: 10.2.2
+  resolution: "testcontainers@npm:10.2.2"
   dependencies:
     "@balena/dockerignore": ^1.0.2
-    archiver: ^5.3.1
+    archiver: ^5.3.2
     async-lock: ^1.4.0
     byline: ^5.0.0
     debug: ^4.3.4
     docker-compose: ^0.24.2
     dockerode: ^3.3.5
     get-port: ^5.1.1
-    node-fetch: ^2.6.12
+    node-fetch: ^2.7.0
     proper-lockfile: ^4.1.2
-    properties-reader: ^2.2.0
+    properties-reader: ^2.3.0
     ssh-remote-port-forward: ^1.0.4
     tar-fs: ^3.0.4
     tmp: ^0.2.1
-  checksum: ad7c7f6d1a65e7fc2593ed7212f6e79b270c6859cb18ff19de9bef654ac0affb68a65cdc1f597847030d49f445ebbd38f0261d4016c522a89004fd2bddbac252
+  checksum: 932decce29755482b5719e4999a470bb6739adb5148d1e842448b0dcc03a0df1b8c1179cdeac7de5c8a518b7ecc068982dcd40cb724d8b37c65302439f02a510
   languageName: node
   linkType: hard
 

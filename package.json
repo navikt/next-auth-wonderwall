@@ -27,7 +27,7 @@
         "jsonwebtoken": "^9.0.2",
         "prettier": "^3.0.3",
         "react": "^18.2.0",
-        "testcontainers": "^10.2.1",
+        "testcontainers": "^10.2.2",
         "ts-jest": "^29.1.1",
         "typescript": "^5.2.2"
     },
