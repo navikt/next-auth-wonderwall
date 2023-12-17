@@ -945,7 +945,7 @@ __metadata:
     openid-client: ^5.6.1
     prettier: ^3.0.3
     react: ^18.2.0
-    testcontainers: ^10.2.1
+    testcontainers: ^10.4.0
     ts-jest: ^29.1.1
     typescript: ^5.2.2
     zod: ^3.22.4
@@ -1082,6 +1082,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/docker-modem@npm:*":
+  version: 3.0.6
+  resolution: "@types/docker-modem@npm:3.0.6"
+  dependencies:
+    "@types/node": "*"
+    "@types/ssh2": "*"
+  checksum: cc58e8189f6ec5a2b8ca890207402178a97ddac8c80d125dc65d8ab29034b5db736de15e99b91b2d74e66d14e26e73b6b8b33216613dd15fd3aa6b82c11a83ed
+  languageName: node
+  linkType: hard
+
+"@types/dockerode@npm:^3.3.21":
+  version: 3.3.23
+  resolution: "@types/dockerode@npm:3.3.23"
+  dependencies:
+    "@types/docker-modem": "*"
+    "@types/node": "*"
+  checksum: 065e9ae43f13641e0df149335914d10af95e559002efe5a5de8e56df9a21b4309b18dbc04fd4c59a4e893c4fedc7df892db28e9d25457bce0c4fd33d21a67834
+  languageName: node
+  linkType: hard
+
 "@types/graceful-fs@npm:^4.1.3":
   version: 4.1.5
   resolution: "@types/graceful-fs@npm:4.1.5"
@@ -1156,6 +1176,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^18.11.18":
+  version: 18.19.3
+  resolution: "@types/node@npm:18.19.3"
+  dependencies:
+    undici-types: ~5.26.4
+  checksum: 58c4fa45a78fcec75c78182a4b266395905957633654eb0311c5f9c30ac15c179ea2287ab1af034e46c2db7bb0589ef0000ee64c1de8f568a0aad29eaadb100c
+  languageName: node
+  linkType: hard
+
 "@types/semver@npm:^7.3.12, @types/semver@npm:^7.5.0":
   version: 7.5.0
   resolution: "@types/semver@npm:7.5.0"
@@ -1169,6 +1198,15 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 190f3c235bf19787cd255f366d3ac9233875750095f3c73d15e72a1e67a826aed7e7c389603c5e89cb6420b87ff6dffc566f9174e546ddb7ff8c8dc2e8b00def
+  languageName: node
+  linkType: hard
+
+"@types/ssh2@npm:*":
+  version: 1.11.18
+  resolution: "@types/ssh2@npm:1.11.18"
+  dependencies:
+    "@types/node": ^18.11.18
+  checksum: 4ec15cf2c1184c4bf1de9c7d92f39c588225289200a8956e230c9f153957a71aeae759a7ab7667191be1f497081598f03f91c8e3f43391dff71381be406a6647
   languageName: node
   linkType: hard
 
@@ -1563,7 +1601,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"archiver@npm:^5.3.1":
+"archiver@npm:^5.3.2":
   version: 5.3.2
   resolution: "archiver@npm:5.3.2"
   dependencies:
@@ -5063,7 +5101,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.6.12":
+"node-fetch@npm:^2.7.0":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
   dependencies:
@@ -5567,7 +5605,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"properties-reader@npm:^2.2.0":
+"properties-reader@npm:^2.3.0":
   version: 2.3.0
   resolution: "properties-reader@npm:2.3.0"
   dependencies:
@@ -6349,25 +6387,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"testcontainers@npm:^10.2.1":
-  version: 10.2.1
-  resolution: "testcontainers@npm:10.2.1"
+"testcontainers@npm:^10.4.0":
+  version: 10.4.0
+  resolution: "testcontainers@npm:10.4.0"
   dependencies:
     "@balena/dockerignore": ^1.0.2
-    archiver: ^5.3.1
+    "@types/dockerode": ^3.3.21
+    archiver: ^5.3.2
     async-lock: ^1.4.0
     byline: ^5.0.0
     debug: ^4.3.4
     docker-compose: ^0.24.2
     dockerode: ^3.3.5
     get-port: ^5.1.1
-    node-fetch: ^2.6.12
+    node-fetch: ^2.7.0
     proper-lockfile: ^4.1.2
-    properties-reader: ^2.2.0
+    properties-reader: ^2.3.0
     ssh-remote-port-forward: ^1.0.4
     tar-fs: ^3.0.4
     tmp: ^0.2.1
-  checksum: ad7c7f6d1a65e7fc2593ed7212f6e79b270c6859cb18ff19de9bef654ac0affb68a65cdc1f597847030d49f445ebbd38f0261d4016c522a89004fd2bddbac252
+  checksum: a828ad96b68ae057b837ecafac1389c766723f5cbc449522e541d7f4158ff118fe14a02dfc906fa7ecbab2733b33c47c6ba69744cef6b7a7ca8961eccfc41bb0
   languageName: node
   linkType: hard
 
@@ -6616,6 +6655,13 @@ __metadata:
     has-symbols: ^1.0.3
     which-boxed-primitive: ^1.0.2
   checksum: b7a1cf5862b5e4b5deb091672ffa579aa274f648410009c81cca63fed3b62b610c4f3b773f912ce545bb4e31edc3138975b5bc777fc6e4817dca51affb6380e9
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~5.26.4":
+  version: 5.26.5
+  resolution: "undici-types@npm:5.26.5"
+  checksum: 3192ef6f3fd5df652f2dc1cd782b49d6ff14dc98e5dced492aa8a8c65425227da5da6aafe22523c67f035a272c599bb89cfe803c1db6311e44bed3042fc25487
   languageName: node
   linkType: hard
 
